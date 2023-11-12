@@ -1,0 +1,136 @@
+---
+title: "Example notebook"
+author: "Madeline Gillman"
+date: 2023-11-05
+format: 
+  pdf:
+    theme: default
+    include-in-header: 
+      text: |
+        \usepackage{lscape}
+        \newcommand{\blandscape}{\begin{landscape}}
+        \newcommand{\elandscape}{\end{landscape}}
+mainfont: HelveticaNeue
+monofont: Monaco
+editor: visual
+---
+
+## Analysis aims
+
+The aim of this analysis is to learn how to create a neat, professional, and shareable pdf document describing basic analyses of the `penguins` dataset in R.
+
+```{r}
+#| include: false
+
+# install.packages("palmerpenguins")
+# install.packages("tidyverse")
+# install.packages("gt")
+library(palmerpenguins)
+library(tidyverse)
+library(gt)
+library(kableExtra)
+
+data("penguins")
+```
+
+## Creating tables {.smaller}
+
+Creating tables in quarto is straightforward. The default R output works just fine, but there are many packages that can help you easily create publication quality tables. My favorites are the [gt package](https://gt.rstudio.com), but note that formatting options for pdfs are still relatively limited.
+
+```{r}
+
+penguins %>% 
+  count(species)
+```
+
+Hmm, that table is not cute. By default, Quarto prints data frames and matrices as you'd see them in the R console. Let's try a few other options.
+
+@tbl-penguins-kbl Number of penguins per species formatted using `gt::gt()`
+
+```{r}
+#| label: tbl-penguins-kbl
+#| tbl-cap: Number of penguins per species.
+
+penguins %>% 
+  count(species) %>%
+  gt()
+```
+
+@tbl-penguins-kbl-styled Number of penguins per species formatted using `kableExtra::kbl`
+
+```{r}
+#| label: tbl-penguins-kbl-styled
+#| tbl-cap: Number of penguins per species.
+
+penguins %>% 
+  count(species) %>%
+  kbl()
+```
+
+There are many chunk options for formatting tables. See <https://quarto.org/docs/authoring/tables.html> for more!
+
+Sometimes, tables will be too wide and run off the page when rendered to a pdf. If this is the case, you can rotate that specific page using the lscape latex package. This will only affect the pdf output--it will still be portrait in html. 😊
+
+```         
+\newpage
+
+\blandscape
+
+# your code that makes the super wide table here
+
+\elandscape
+```
+
+\newpage
+
+\blandscape
+
+```{r}
+penguins %>%
+  slice_head(n = 10) %>%
+  gt() 
+
+```
+
+\elandscape
+
+## Plots and images
+
+You can easily add plots or insert images (clip art, photos, .pngs of plots you've already made). Helpful code chunk options when making figures:
+
+-   `#| echo: false` which will exclude source code in output
+
+-   `#| warning: false` which will not print warnings to the output
+
+-   `#| fig-width: 5` controls the width of the figure.
+
+-   `#| fig-cap: "Polar axis plot"` adds a figure caption.
+
+-   `#| fig-alt: "A line plot on a polar axis"` adds alt text.
+
+You may have noticed that you can add references (links to sections in the document) to tables and figures. To use these, add one of the below labels to the code chunk. Note that figures must start with `fig` and tables must start with `tbl.` You can later reference these throughout the document by typing `@`
+
+-   `#| label: fig-descriptive-yet-short-name-for-figure`
+
+-   `#| label: tbl-descriptive-yet-short-name-for-table`
+
+For more things you can do such as more figure/image sizing options, alignment, and caption locations, see <https://quarto.org/docs/authoring/figures.html>
+
+```{r}
+#| label: fig-bill-dims-species
+#| fig-width: 5
+#| fig-alt: "a plot of penguin bill length vs depth"
+#| fig-cap: "Bill length vs bill depth for three penguin species"
+
+ggplot(
+  penguins,
+  aes(x = bill_length_mm, y = bill_depth_mm,
+      color = species, shape = species)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = "Bill length (mm)", y = "Bill depth (mm)")
+```
+
+Note that a lot of the options overlap slightly in function! See this table from [R for Data Science:](https://r4ds.hadley.nz/quarto.html) (also an example of adding an image)
+
+![](images/chunk_options.png)

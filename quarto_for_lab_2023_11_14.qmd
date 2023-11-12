@@ -1,0 +1,280 @@
+---
+title: "Introduction to Quarto with R"
+author: "Madeline Gillman"
+date: 2023-11-14
+format:
+  pptx:
+    reference-doc: template1.pptx
+monofont: Monaco
+editor: visual
+---
+
+## What is Quarto? {.incremental}
+
+-   An open source publishing system
+
+    -   Allows you to create cool dynamic content
+
+    -   Make reproducible documents/publications that are publication quality
+
+        -   articles, presentations, dashboards, websites, blogs, and books in HTML, PDF, MS Word, ePub...
+
+## Why Quarto?
+
+::: incremental
+-   A way to combine code + prose
+
+    -   Multiple languages
+
+-   Reproducible, support many output formats
+
+-   Easily create presentation-ready documents that can be **easily updated** and shared
+
+-   Can be a lab analysis notebook
+
+-   You don't even need to know Markdown!
+:::
+
+## Creating an analysis notebook
+
+-   The Quarto document can be used to run analyses---but I recommend keeping that in separate scripts.
+
+-   A more realistic way for us to use Quarto in our lab: integrating data exploration, methods, and analysis choices to keep us organized and easily share with collaborators in multiple formats
+
+## Creating an analysis notebook
+
+1.  Open R Studio
+2.  File -\> New File -\> Quarto Document
+    -   Here, you'll be prompted to enter some metadata. This metadata will go in the YAML header (more on that later)
+
+# Orienting yourself in Quarto
+
+## The YAML header
+
+![](images/yaml.png){fig-align="center"}
+
+## Source vs. visual editor
+
+![](images/visualeditor.png){fig-align="center"}
+
+## Formatting options
+
+![](images/format_opts.png){fig-align="center"}
+
+## Adding code chunks, images, links, and more
+
+![](images/insert_opts.png){fig-align="center"}
+
+## Adding citations
+
+![](images/citation_ex.png){fig-align="center"}
+
+## Adding table and figure references
+
+::: columns
+::: {.column width="50%"}
+![](images/fig_ref_ex.png)
+:::
+
+::: {.column width="50%"}
+![](images/tbl_ref_ex.png)
+:::
+:::
+
+## Rendering
+
+When you click the **Render** button a document will be generated that includes:
+
+-   Content authored with markdown
+
+-   Output from executable code
+
+-   You may need to install a LaTeX distribution. You can install using R by running: `tinytex::install_tinytex()`
+
+## Render options
+
+![](images/render_opts.png){fig-align="center"}
+
+## Getting fancy -- fonts
+
+First, check which fonts you have available:
+
+```         
+# install.packages("systemfonts") 
+fonts <- systemfonts::system_fonts() 
+View(fonts)
+```
+
+Then, update your YAML with a font name under the `name` column:
+
+`mainfont: ArialMT`
+
+`monofont: Monaco`
+
+## What you can use Quarto for starting today!
+
+::: incremental
+-   Lab notebook
+
+    -   Read in results files and blend code, methods, analysis decisions, tables, plots, etc.
+
+    -   Export output as pdf, html, or word doc
+
+-   Create presentations
+
+    -   Export output as html, pptx
+
+-   Personal branding
+
+    -   Resume
+
+    -   Website
+
+-   Writing papers (maybe)
+:::
+
+# Git and Github
+
+## What is git?
+
+-   Git is a version control software
+
+    -   Track and manage changes to code/software in a safe way
+
+## Why use git? {.incremental}
+
+::: incremental
+-   Git is widely used across academia and knowing git is essential for any computational work in industry
+
+-   Track changes (versions) of your code in an reproducible, open-source way
+
+    -   Make and test changes while maintaining a "master" version
+:::
+
+## What is Github?
+
+-   A **repository** hosting service
+
+-   Free to have public repositories, paid account required for several private repositories
+
+    -   You can get free GitHub Pro as a student
+
+-   Another repository hosting service: Bitbucket
+
+## Getting started {.incremental}
+
+::: incremental
+1.  Create a GitHub account
+    -   Sign up for GitHub Educationt to access more features
+2.  Link Longleaf with your GitHub account
+    -   See [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
+
+    -   You'll probably already have an existing SSH key
+3.  Clone or initiate your first repository!
+    -   `git clone <SSH_key_from_repository>`
+
+    -   `mkdir <directory_name>`
+
+        -   `cd <directory_name>`
+
+        -   `git init`
+
+    -   GitHub only allows letters, numbers, and the special characters "-", "\_", and "."
+
+        -   So: no spaces, no #\$%\^&\*()\@!
+:::
+
+## A quick aside on what to use GitHub for {.incremental}
+
+::: incremental
+-   GitHub is not Google Drive
+
+    -   If you try to add large files, you'll run into issues
+
+-   GitHub is not a secure place to store data
+
+    -   Especially for the kind of research we do, track scripts only
+
+        -   You should be able to recreate all intermediate data files, plots, results, etc. using your scripts anyways!
+
+-   Probably best to keep most repositories private (unless the repository has code you are intending to share such as as part of an open source tool or paper)
+:::
+
+## A basic git workflow
+
+![](images/git_workflow-01.png)
+
+## A basic git workflow - pushing a change
+
+![](images/git_workflow-02.png)
+
+## A basic git workflow - pushing a change
+
+![](images/git_workflow-03.png)
+
+## A basic git workflow - pushing a change
+
+![](images/git_workflow-04.png)
+
+## A basic git workflow - pushing a change
+
+![](images/git_workflow-05.png)
+
+## A basic git workflow - pushing a change
+
+![](images/git_workflow-06.png)
+
+## A basic git workflow - pulling
+
+![](images/git_workflow-07.png)
+
+## A basic git workflow - pulling
+
+![](images/git_workflow-08.png)
+
+## A basic git workflow - pulling
+
+![](images/git_workflow-09.png)
+
+## Other things to mention on git
+
+::: columns
+::: {.column width="50%"}
+-   Use `git status` in a repository at any point to see where things stand:
+
+    -   Which files have changes but not staged?
+
+    -   Which files are staged but not committed?
+
+    -   Which files have no changes?
+
+    -   What branch are you on?
+:::
+
+::: {.column width="50%"}
+![](images/git_status_ex.png)
+:::
+:::
+
+## Additional Resources
+
+-   Quarto is not an R package, so "`?`" won't get you help. Instead, refer to the [Quarto documentation](https://quarto.org).
+
+```{=html}
+<!-- -->
+```
+-   [R for Data Science Quarto Chapter](https://r4ds.hadley.nz/quarto.html)
+
+-   [Verify student status to get GitHub Pro free](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwipo_u-976CAxUhFlkFHRQnBuwQFnoECAgQAw&url=https%3A%2F%2Feducation.github.com%2Fpack%23%3A~%3Atext%3DEnjoy%2520a%2520credit%2520of%2520%252413%2520USD%2520per%2520month%2520for%252024%2520months.%26text%3DFree%2520GitHub%2520Pro%2520while%2520you%2520are%2520a%2520student.&usg=AOvVaw2Hd93-7RhFggjmT_mLZuU9&opi=89978449)
+
+-   [Git/Github cheat sheet](https://education.github.com/git-cheat-sheet-education.pdf)
+
+-   [Git tutorial for beginners](https://www.atatus.com/blog/git-tutorial-for-beginners/)
+
+-   There are more advanced git uses you may need or run into. Look up:
+
+    -   Branches
+
+    -   Forking
+
+-   Practice cloning this repository:
