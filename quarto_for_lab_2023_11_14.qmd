@@ -277,4 +277,4 @@ Then, update your YAML with a font name under the `name` column:
 
     -   Forking
 
--   Practice cloning this repository:
+-   Practice cloning this repository: <https://github.com/madelinegillman/lab_intro_to_quarto>
