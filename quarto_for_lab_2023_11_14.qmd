@@ -165,7 +165,7 @@ Then, update your YAML with a font name under the `name` column:
 
 ::: incremental
 1.  Create a GitHub account
-    -   Sign up for GitHub Educationt to access more features
+    -   Sign up for GitHub Education to access more features
 2.  Link Longleaf with your GitHub account
     -   See [Connecting to GitHub with SSH](https://docs.github.com/en/authentication/connecting-to-github-with-ssh)
 
@@ -260,9 +260,8 @@ Then, update your YAML with a font name under the `name` column:
 
 -   Quarto is not an R package, so "`?`" won't get you help. Instead, refer to the [Quarto documentation](https://quarto.org).
 
-```{=html}
 <!-- -->
-```
+
 -   [R for Data Science Quarto Chapter](https://r4ds.hadley.nz/quarto.html)
 
 -   [Verify student status to get GitHub Pro free](https://www.google.com/url?sa=t&rct=j&q=&esrc=s&source=web&cd=&cad=rja&uact=8&ved=2ahUKEwipo_u-976CAxUhFlkFHRQnBuwQFnoECAgQAw&url=https%3A%2F%2Feducation.github.com%2Fpack%23%3A~%3Atext%3DEnjoy%2520a%2520credit%2520of%2520%252413%2520USD%2520per%2520month%2520for%252024%2520months.%26text%3DFree%2520GitHub%2520Pro%2520while%2520you%2520are%2520a%2520student.&usg=AOvVaw2Hd93-7RhFggjmT_mLZuU9&opi=89978449)

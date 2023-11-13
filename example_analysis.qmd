@@ -2,6 +2,9 @@
 title: "Example notebook"
 author: "Madeline Gillman"
 date: 2023-11-05
+header-includes:
+  - \usepackage{float}
+  - \floatplacement{figure}{H}  #make every figure with caption = h, this was the fix
 format: 
   pdf:
     theme: default
@@ -10,9 +13,10 @@ format:
         \usepackage{lscape}
         \newcommand{\blandscape}{\begin{landscape}}
         \newcommand{\elandscape}{\end{landscape}}
-mainfont: HelveticaNeue
-monofont: Monaco
+#mainfont: HelveticaNeue
+#monofont: Monaco
 editor: visual
+fig_caption: yes
 ---
 
 ## Analysis aims
@@ -27,7 +31,7 @@ The aim of this analysis is to learn how to create a neat, professional, and sha
 # install.packages("gt")
 library(palmerpenguins)
 library(tidyverse)
-library(gt)
+#library(gt)
 library(kableExtra)
 
 data("penguins")
@@ -35,7 +39,7 @@ data("penguins")
 
 ## Creating tables {.smaller}
 
-Creating tables in quarto is straightforward. The default R output works just fine, but there are many packages that can help you easily create publication quality tables. My favorites are the [gt package](https://gt.rstudio.com), but note that formatting options for pdfs are still relatively limited.
+Creating tables in quarto is straightforward. The default R output works just fine, but there are many packages that can help you easily create publication quality tables. I recommend using the package `kableExtra` as it is the best at producing latex tables (i.e., for creating pdfs). If you don't intend to create a pdf, other great packages for creating nice tables include `gt` and `DT`. If you use those other packages and render your document to a pdf, you might get some unexpected behavior. This might change in the future--Quarto is relatively new, and packages like `gt` are being updated to better accommodate different output types.
 
 ```{r}
 
@@ -45,7 +49,9 @@ penguins %>%
 
 Hmm, that table is not cute. By default, Quarto prints data frames and matrices as you'd see them in the R console. Let's try a few other options.
 
-@tbl-penguins-kbl Number of penguins per species formatted using `gt::gt()`
+Note that we have to add `kableExtra::kable_styling(latex_options = "HOLD_position")`: this prevents the table from always appearing at the top of the page.
+
+@tbl-penguins-kbl Number of penguins per species formatted using `kableExtra::kable`
 
 ```{r}
 #| label: tbl-penguins-kbl
@@ -53,10 +59,13 @@ Hmm, that table is not cute. By default, Quarto prints data frames and matrices 
 
 penguins %>% 
   count(species) %>%
-  gt()
+  kableExtra::kable() %>%
+  kableExtra::kable_styling(latex_options = "HOLD_position")
 ```
 
-@tbl-penguins-kbl-styled Number of penguins per species formatted using `kableExtra::kbl`
+Let's try some other formatting options! It might be helpful to add stripes to make distinguishing the rows easier, or even highlighting certain rows. Try `??kableExtra::kable_styling` for more options.
+
+@tbl-penguins-kbl-styled Number of penguins per species formatted using `kableExtra::kable` with other formatting options
 
 ```{r}
 #| label: tbl-penguins-kbl-styled
@@ -64,12 +73,14 @@ penguins %>%
 
 penguins %>% 
   count(species) %>%
-  kbl()
+  kableExtra::kable() %>%
+  kableExtra::kable_styling(latex_options = c("HOLD_position", "striped"), 
+                            stripe_color = "#7BAFD4", stripe_index = 2)
 ```
 
 There are many chunk options for formatting tables. See <https://quarto.org/docs/authoring/tables.html> for more!
 
-Sometimes, tables will be too wide and run off the page when rendered to a pdf. If this is the case, you can rotate that specific page using the lscape latex package. This will only affect the pdf output--it will still be portrait in html. 😊
+Sometimes, tables will be too wide and run off the page when rendered to a pdf. If this is the case, you can rotate that specific page using the lscape latex package. This will only affect the pdf output--it will still be portrait in html.
 
 ```         
 \newpage
@@ -88,11 +99,21 @@ Sometimes, tables will be too wide and run off the page when rendered to a pdf. 
 ```{r}
 penguins %>%
   slice_head(n = 10) %>%
-  gt() 
+  kable() %>%
+  kable_styling(latex_options = "HOLD_position")
 
 ```
 
 \elandscape
+
+You could also try the `scale_down` option in `kable_styling()`:
+
+```{r}
+penguins %>%
+  slice_head(n = 10) %>%
+  kable() %>%
+  kable_styling(latex_options = c("HOLD_position", "scale_down"))
+```
 
 ## Plots and images
 
